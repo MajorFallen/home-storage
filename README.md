@@ -1,4 +1,4 @@
- Household Management Web App
+# Household Management Web App
 
 A modular React and TypeScript web application for managing households inventory and expenses. Built with a feature-driven architecture, custom compound UI components, and dynamic theme tokens using CSS Modules. 
 
