@@ -1,0 +1,35 @@
+.entered-household-error {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.household-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.placeholder-card {
+    background-color: var(--surface, #ffffff);
+    border: 1px dashed var(--border, #cbd5e1);
+    border-radius: var(--radius, 8px);
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--text-muted, #64748b);
+}
+
+    .placeholder-card h3 {
+        color: var(--text, #0f172a);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .placeholder-card p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }

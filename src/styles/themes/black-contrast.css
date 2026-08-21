@@ -1,0 +1,62 @@
+/* src/styles/themes/black-contrast.css */
+
+[data-theme='black-contrast'] {
+  color-scheme: dark;
+
+  /* 1. BACKGROUND & MAIN TEXT */
+  --bg: #151416;
+  --bg-foreground: #ffffff;
+  --bg-muted-foreground: #94a3b8;
+
+  /* 2. PANELS, CARDS, MODALS */
+  --surface: #000000;
+  --surface-hover: #1e1e24;           /* Poprawione z #ffffff dla zachowania czytelności tekstu */
+  --surface-foreground: #ffffff;
+  --surface-muted-foreground: #a1a1aa;
+
+  /* 3. MAIN ACTION (High-Contrast White) */ 
+  --primary: #ffffff;
+  --primary-hover: #e2e8f0;
+  --primary-foreground: #000000;      /* Czarny tekst na białym przycisku */
+  --primary-light: rgba(255, 255, 255, 0.15);
+
+  /* 4. SECONDARY ACTION */
+  --secondary: #27272a;
+  --secondary-hover: #3f3f46;
+  --secondary-foreground: #ffffff;
+  --secondary-light: #18181b;
+
+  /* 5. DANGER, ERROR, ALERT */
+  --danger: #fd0000;
+  --danger-hover: #970000;
+  --danger-foreground: #ffffff;
+  --danger-light: rgba(253, 0, 0, 0.2);
+
+  /* 6. ACCENT (Purple) */
+  --accent: #c084fc;
+  --accent-hover: #a855f7;
+  --accent-foreground: #000000;
+  --accent-light: rgba(192, 132, 252, 0.15);
+
+  /* 7. CODE & HIGHLIGHTS */
+  --code-bg: #1e293b;
+
+  /* 8. BORDERS & FOCUS */
+  --border: #b8b8b8;
+  --border-hover: #ffffff;
+  --ring: #ffffff;                    /* Wyraźna biała ramka focus w wysokim kontraście */
+
+  /* 9. DISABLED STATES */
+  --disabled: #334155;
+  --disabled-foreground: #64748b;
+
+  /* 10. SHADOWS */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 0px 25px 0px rgba(255, 255, 255, 0.5), 0 0px 12px 0px rgba(255, 255, 255, 0.0);
+
+  /* ICONS */
+  --choice-icon: '*';
+  --choice-icon-size: 1.75rem;
+  --choice-icon-offset-y: 3px;
+}

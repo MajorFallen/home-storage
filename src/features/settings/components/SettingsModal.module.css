@@ -1,0 +1,63 @@
+/* src/shared/components/SettingsModal/SettingsModal.module.css */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease-in-out;
+}
+
+/* Wymiary karty modala - nadpisujemy domyślne marginesy bottom z Card */
+.modalCard {
+  width: 100%;
+  max-width: 480px;
+  margin: 1rem !important;
+  animation: slideUp 0.15s ease-in-out;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.settingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.settingLabel {
+  font-weight: 500;
+  color: var(--surface-foreground);
+}
+
+.settingDescription {
+  font-size: 0.85rem;
+  color: var(--surface-muted-foreground);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

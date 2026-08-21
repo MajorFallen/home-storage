@@ -1,0 +1,62 @@
+/* src/shared/components/ui/ChoiceTile/ChoiceTile.module.css */
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--surface-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tile:hover:not(:disabled) {
+  border-color: var(--border-hover);
+  background-color: var(--surface-hover);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  color: var(--surface-foreground);
+}
+
+.selected:hover:not(:disabled) {
+  border-color: var(--primary-hover);
+}
+
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: var(--primary);
+  margin-left: 0.5rem;
+  
+  /* Stały wymiar kontenera — nie zmieni się niezależnie od wielkości gwiazdki */
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0; /* Gwarantuje, że długi tekst nie ściśnie ikony */
+}
+
+.indicator::before {
+  content: var(--choice-icon, '✓');
+  /* Rozmiar ikony zmienia tylko jej optyczną wielkość, nie wymiary kafelka */
+  font-size: var(--choice-icon-size, 0.875rem); 
+  transform: translateY(var(--choice-icon-offset-y, 0px));
+  display: block;
+  line-height: 1;
+}

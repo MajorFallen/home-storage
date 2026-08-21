@@ -1,0 +1,76 @@
+/* src/shared/components/ui/Card/Card.module.css */
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid;
+  color: var(--surface-foreground);
+  transition: var(--transition);
+  display: flex;
+  box-sizing: border-box;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Warianty układu (Layout) */
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Warianty wizualne */
+.default {
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+.outlined {
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+.flat {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.header {
+  padding-bottom: 0.75rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--surface-foreground);
+  margin: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.footer {
+  margin: 1rem -1.25rem -1.25rem -1.25rem;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}

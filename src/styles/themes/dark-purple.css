@@ -1,0 +1,66 @@
+/* src/styles/themes/dark-purple.css */
+
+[data-theme='dark-purple'] {
+  color-scheme: dark;
+
+  /* 1. BACKGROUND & MAIN TEXT */
+  --bg: #0a0712;
+  --bg-foreground: #ffffff;
+  --bg-muted-foreground: #94a3b8;
+
+  /* 2. PANELS, CARDS, MODALS */
+  --surface: #130e1e;
+  --surface-hover: #1e162f;
+  --surface-foreground: #cbd5e1;
+  --surface-muted-foreground: #94a3b8;
+
+  /* 3. MAIN ACTION (Purple) */ 
+  --primary: #a855f7;
+  --primary-hover: #9333ea;
+  --primary-foreground: #ffffff; 
+  --primary-light: rgba(168, 85, 247, 0.18);
+
+  /* 4. SECONDARY ACTION */
+  --secondary: #1e162f;
+  --secondary-hover: #2e2247;
+  --secondary-foreground: #f3f0f8;
+  --secondary-light: #130e1e;
+
+  /* 5. DANGER, ERROR, ALERT */
+  --danger: #ff0026;
+  --danger-hover: #950019;
+  --danger-foreground: #ffffff;
+  --danger-light: rgba(251, 113, 133, 0.18);
+
+  /* 6. ACCENT */
+  --accent: #c084fc;
+  --accent-hover: #a855f7;
+  --accent-foreground: #0a0712;
+  --accent-light: rgba(192, 132, 252, 0.15);
+
+  /* 7. CODE & HIGHLIGHTS */
+  --code-bg: #1a1228;
+
+  /* 8. BORDERS & FOCUS */
+  --border: rgba(192, 132, 252, 0.12);
+  --border-hover: rgba(192, 132, 252, 0.28);
+  --ring: #c084fc;                     /* Poświata focus dopasowana do akcentu */
+
+  /* 9. DISABLED STATES */
+  --disabled: #1a1526;
+  --disabled-foreground: #475569;
+
+  /* 10. SHADOWS & GLOW */
+  --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  --shadow: 
+    0 4px 20px -2px rgba(0, 0, 0, 0.7),
+    0 0 15px -1px rgba(192, 132, 252, 0.18);
+  --shadow-lg: 
+    0 12px 30px -4px rgba(0, 0, 0, 0.85),
+    0 0 25px 2px rgba(192, 132, 252, 0.35);
+
+    /* ICONS */
+  --choice-icon: '●';
+  --choice-icon-size: 1.5rem;
+  --choice-icon-offset-y: -2px;
+}

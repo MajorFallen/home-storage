@@ -1,0 +1,66 @@
+/* src/features/user/components/badges/UserRoleBadge.module.css */
+
+/* .admin {
+  background-color: rgba(239, 68, 68, 0.00);
+  color: #f94747;
+  border-color: rgba(239, 68, 68, 1);
+  box-shadow: 0 0 20px rgba(230, 58, 58, 0.3), inset 0 0 20px rgba(230, 58, 58, 0.3);
+}
+
+.user {
+  background-color: rgba(148, 163, 184, 0.14);
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.35);
+  box-shadow: 0 0 8px rgba(148, 163, 184, 0.1);
+}  */
+
+/* src/features/user/components/badges/UserRoleBadge.module.css */
+
+/* --- Parametry dla ról (Hue, Chroma, Glow) --- */
+.admin { 
+  --role-hue: 25;            /* Czerwony / Fuksja */
+  --role-chroma: 0.3;       /* Wysokie nasycenie (neon) */
+  --shadow-range: 20px;
+}
+
+.user { 
+  --role-hue: 220;           /* Chłodny szary */
+  --role-chroma: 0.01;       /* Prawie brak nasycenia (elegancki szary) */
+  --shadow-range: 10px;
+}
+
+/* --- Główna logika badge'a --- */
+.roleBadge {
+  border-width: 1.5px;
+  border-style: solid;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition: all 0.2s ease-in-out;
+
+  /* Napis */
+  color: light-dark(
+    oklch(0.38 var(--role-chroma, 0.2) var(--role-hue, 0) / 1),
+    oklch(1.00 var(--role-chroma, 0.2) var(--role-hue, 0) / 1)
+  );
+
+  /* Tło */
+  background-color: light-dark(
+    oklch(0.55 var(--role-chroma, 0.2) var(--role-hue, 0) / 0.00),
+    oklch(0.75 var(--role-chroma, 0.2) var(--role-hue, 0) / 0.00)
+  );
+
+  /* Ramka */
+  border: 1px solid light-dark(
+    oklch(0.48 var(--role-chroma, 0.2) var(--role-hue, 0) / 0.7),
+    oklch(0.85 var(--role-chroma, 0.2) var(--role-hue, 0) / 0.85)
+  );
+
+  --glow-color: light-dark(
+    oklch(0.40 var(--role-chroma, 0.2) var(--role-hue, 0) / 0.3),
+    oklch(1.00 var(--role-chroma, 0.2) var(--role-hue, 0) / 0.3)
+  ); 
+  
+  box-shadow: 
+    0 0 var(--shadow-range, 8px) var(--glow-color),
+    inset 0 0 var(--shadow-range, 8px) var(--glow-color);
+}

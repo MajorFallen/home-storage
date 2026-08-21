@@ -1,0 +1,61 @@
+/* src/styles/themes/light-emerald.css */
+
+[data-theme='light-emerald'] {
+  color-scheme: light;
+
+  /* 1. BACKGROUND & MAIN TEXT */
+  --bg: #f8fafc;
+  --bg-foreground: #0f172a;
+  --bg-muted-foreground: #64748b;
+
+  /* 2. PANELS, CARDS, MODALS */
+  --surface: #ffffff;
+  --surface-hover: #f1f5f9;
+  --surface-foreground: #0f172a;
+  --surface-muted-foreground: #64748b;
+
+  /* 3. MAIN ACTION (Emerald) */ 
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --primary-foreground: #ffffff; 
+  --primary-light: #dcfce7;
+
+  /* 4. SECONDARY ACTION */
+  --secondary: #f1f5f9;
+  --secondary-hover: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --secondary-light: #f8fafc;
+
+  /* 5. DANGER, ERROR, ALERT */
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-foreground: #ffffff;
+  --danger-light: #fee2e2;
+
+  /* 6. ACCENT (Cyan) */
+  --accent: #06b6d4;
+  --accent-hover: #0891b2;
+  --accent-foreground: #ffffff;
+  --accent-light: #cffaff;
+
+  /* 7. CODE & HIGHLIGHTS */
+  --code-bg: #f1f5f9;
+
+  /* 8. BORDERS & FOCUS */
+  --border: #e2e8f0;
+  --border-hover: #10b981;
+  --ring: #10b981;
+
+  /* 9. DISABLED STATES */
+  --disabled: #f1f5f9;
+  --disabled-foreground: #94a3b8;
+
+  /* 10. SHADOWS */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+
+  /* ICONS */
+  --choice-icon: '✓';
+  --choice-icon-size: 0.875rem;
+}

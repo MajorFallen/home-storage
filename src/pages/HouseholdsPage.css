@@ -1,0 +1,64 @@
+.dashboard-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    width: 100%;
+}
+
+/* Nagłówek sekcji strony */
+.page-header {
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem; /* Subtelne przesunięcie w prawo */
+}
+
+    .page-header h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--bg-foreground);
+    }
+
+/* Komunikaty o błędach */
+.alert-error {
+    margin-bottom: 1rem;
+}
+
+/* Stan ładowania */
+.loading-container {
+    display: grid;
+    place-items: center;
+    padding: 3rem;
+}
+
+.spinner {
+    border-top-color: var(--primary);
+    border-color: var(--border);
+}
+
+/* Grid kart */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Pusty stan */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--bg-muted-foreground);
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px dashed var(--border);
+}

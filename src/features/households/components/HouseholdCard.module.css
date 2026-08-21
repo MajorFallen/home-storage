@@ -1,0 +1,19 @@
+/* src/features/households/components/HouseholdCard.module.css */
+.headerLayout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Wyśrodkowanie badge'a w pionie względem tytułu */
+  gap: 0.5rem;
+}
+
+.footerLayout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dateText {
+  font-size: 0.75rem;
+  color: var(--surface-muted-foreground);
+}

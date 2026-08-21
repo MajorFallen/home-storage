@@ -1,0 +1,100 @@
+/* src/shared/components/ui/PageHeader/PageHeader.module.css */
+
+.container {
+  margin-bottom: 2rem;
+}
+
+/* Wariant jednowierszowy - gwarancja jednego wiersza */
+.rowLayout {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: nowrap; /* Blada możliwość przeskoczenia do nowego wiersza */
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap; /* Wewnątrz lewej grupy elementy mogą się lekko zawinąć, jeśli brak miejsca */
+  min-width: 0;    /* Zapobiega rozpychaniu kontenera przez długi email/tekst */
+}
+
+.actionsGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+  flex-shrink: 0;  /* Gwarantuje, że przyciski nigdy nie zmniejszą się ani nie spadną niżej */
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--surface-foreground);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.text {
+  font-weight: 700;
+  color: var(--surface-foreground);
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--surface-muted-foreground), #64748b;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: var(--surface-muted-foreground, #64748b);
+}
+
+.metaItem strong {
+  color: var(--surface-foreground);
+}
+
+.meta > .metaItem:not(:last-child)::after {
+  content: "•";
+  margin-left: 0.5rem;
+  color: var(--border);
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .meta > .metaItem:not(:last-child)::after {
+    display: none;
+  }
+}

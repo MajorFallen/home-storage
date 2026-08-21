@@ -1,0 +1,62 @@
+/* src/styles/themes/light-slate.css */
+
+:root:not([data-theme]),
+[data-theme='light-slate'] {
+  color-scheme: light;
+  
+  /* 1. BACKGROUND & MAIN TEXT */
+  --bg: #ffffff;
+  --bg-foreground: #0f172a;           
+  --bg-muted-foreground: #64748b;     
+
+  /* 2. PANELS, CARDS, MODALS */
+  --surface: #ffffff;
+  --surface-hover: #f8fafc;            
+  --surface-foreground: #0f172a;      
+  --surface-muted-foreground: #64748b;
+
+  /* 3. MAIN ACTION (Indigo) */ 
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-foreground: #ffffff; 
+  --primary-light: #e0e7ff;
+
+  /* 4. SECONDARY ACTION */
+  --secondary: #f1f5f9;
+  --secondary-hover: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --secondary-light: #f8fafc;       
+
+  /* 5. DANGER, ERROR, ALERT */
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-foreground: #ffffff;
+  --danger-light: #fee2e2;
+
+  /* 6. ACCENT (Purple) */
+  --accent: #aa3bff;
+  --accent-hover: #9333ea;
+  --accent-foreground: #ffffff;         
+  --accent-light: rgba(170, 59, 255, 0.1);
+
+  /* 7. CODE & HIGHLIGHTS */
+  --code-bg: #f1f5f9;
+
+  /* 8. BORDERS & FOCUS */
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --ring: #4f46e5;                      
+
+  /* 9. DISABLED STATES */
+  --disabled: #f1f5f9;
+  --disabled-foreground: #94a3b8;
+
+  /* 10. SHADOWS */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+
+  /* ICONS */
+  --choice-icon: '✓';
+  --choice-icon-size: 0.875rem;
+}
