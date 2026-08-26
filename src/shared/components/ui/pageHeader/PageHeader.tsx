@@ -1,4 +1,3 @@
-/* src/shared/components/ui/PageHeader/PageHeader.tsx */
 import React from 'react';
 import { Card } from '../card/Card';
 import styles from './PageHeader.module.css';
@@ -70,6 +69,11 @@ export const PageHeaderMetaItem: React.FC<{ label: string; value?: React.ReactNo
   </span>
 );
 
+export const PageHeaderFooter: React.FC<{ children: React.ReactNode; className?: string }> = ({
+  children,
+  className = '',
+}) => <div className={`${styles.footer} ${className}`}>{children}</div>;
+
 export const PageHeader = Object.assign(PageHeaderContainer, {
   Group: PageHeaderGroup,
   Actions: PageHeaderActions,
@@ -79,4 +83,5 @@ export const PageHeader = Object.assign(PageHeaderContainer, {
   Muted: PageHeaderMuted,
   Meta: PageHeaderMeta,
   MetaItem: PageHeaderMetaItem,
+  Footer: PageHeaderFooter,
 });

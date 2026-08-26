@@ -1,6 +1,8 @@
+// src/pages/HouseholdsPage.tsx (lub odpowiednia ścieżka widoku)
 import React, { useEffect } from 'react';
 import { HouseholdCard } from '../features/households/components/HouseholdCard';
 import { HouseholdForm } from '../features/households/components/HouseholdForm';
+import { JoinHouseholdAction } from '../features/households/components/buttons/JoinHouseholdButton';
 import { useHouseholds } from '../features/households/context/HouseholdsContext';
 import './HouseholdsPage.css';
 
@@ -8,14 +10,14 @@ export const HouseholdsPage: React.FC = () => {
     const { households, isLoading, error, selectHousehold } = useHouseholds();
 
     useEffect(() => {
-        // Resetowanie aktywnego domostwa po powrocie do listy
         selectHousehold(null);
     }, [selectHousehold]);
 
     return (
         <div className="dashboard-container">
             <div className="page-header">
-                <h2>Twoje Domostwa</h2>
+                <h2>Your households</h2>
+                <JoinHouseholdAction />
             </div>
 
             {error && <div className="alert-error">{error}</div>}
@@ -28,8 +30,8 @@ export const HouseholdsPage: React.FC = () => {
                 </div>
             ) : households.length === 0 ? (
                 <div className="empty-state">
-                    <p>Nie jesteś jeszcze członkiem żadnego domostwa.</p>
-                    <p>Utwórz pierwsze domostwo za pomocą formularza powyżej.</p>
+                    <p>You are not a member of any household yet.</p>
+                    <p>Create or join your first household.</p>
                 </div>
             ) : (
                 <div className="grid-container">
