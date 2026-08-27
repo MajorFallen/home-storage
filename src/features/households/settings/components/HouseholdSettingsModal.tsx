@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button } from '../../../../shared/components/ui';
+import { Modal, Button } from '@/shared/components/ui';
 import styles from './HouseholdSettingsModal.module.css';
 
 interface HouseholdSettingsModalProps {

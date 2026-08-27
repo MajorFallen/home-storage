@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-bg, rgba(0, 0, 0, 0.5));
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -16,10 +16,14 @@
 .modalCard {
     width: 100%;
     margin: 1rem !important;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--surface-foreground);
     animation: slideUp 0.15s ease-in-out;
 }
 
-/* Rozmiary modala */
+/* Warianty rozmiarów */
 .sm {
     max-width: 380px;
 }

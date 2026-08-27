@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useHouseholds } from '../context/HouseholdsContext';
-import { Button, PageHeader } from '../../../shared/components/ui';
+import { Button, PageHeader } from '@/shared/components/ui';
 import { HouseholdRoleBadge } from './badges/HouseholdRoleBadge';
 import { HouseholdSettingsButton } from '../settings/components/HouseholdSettingsButton';
 import { InviteMemberButton } from '../invites/components/InviteMemberButton';

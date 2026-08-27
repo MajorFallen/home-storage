@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { HouseholdCard } from '../features/households/components/HouseholdCard';
 import { HouseholdForm } from '../features/households/components/HouseholdForm';
-import { JoinHouseholdAction } from '../features/households/components/buttons/JoinHouseholdButton';
+import { JoinHouseholdAction } from '../features/households/invites/components/JoinHouseholdButton';
 import { useHouseholds } from '../features/households/context/HouseholdsContext';
 import './HouseholdsPage.css';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from '../../../../shared/components/ui';
-import { JoinHouseholdModal } from '../modals/JoinHouseholdModal';
+import { Button } from '@/shared/components/ui';
+import { JoinHouseholdModal } from './JoinHouseholdModal';
 
 export const JoinHouseholdAction: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

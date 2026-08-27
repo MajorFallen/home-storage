@@ -1,6 +1,6 @@
 // src/features/households/settings/components/HouseholdSettingsButton.tsx
 import React, { useState } from 'react';
-import { Button, type ButtonProps } from '../../../../shared/components/ui';
+import { Button, type ButtonProps } from '@/shared/components/ui';
 import { HouseholdSettingsModal } from './HouseholdSettingsModal';
 
 interface HouseholdSettingsButtonProps extends Omit<ButtonProps, 'children'> {

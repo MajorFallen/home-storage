@@ -3,6 +3,8 @@ import { householdAuthMiddleware } from '../../middleware/householdAuth.ts'
 import { Env } from '../../types.ts'
 import householdInvitesRouter from './invites.ts'
 import householdMembersRouter from './members.ts'
+import globalInvitesRouter from './globalInvites.ts'
+
 
 const householdsRouter = new Hono<Env>()
 
@@ -159,9 +161,14 @@ householdsRouter.delete('/', async (c) => {
   })
 })
 
-householdsRouter.use('/:id/*', householdAuthMiddleware)
+// Middleware uruchomi się TYLKO, gdy :id jest fizycznie identyfikatorem UUID
+// Ścieżki typu /invites, /join czy /search zostaną automatycznie pominięte!
+householdsRouter.use('/:id{[0-9a-fA-F-]{36}}/*', householdAuthMiddleware)
+householdsRouter.use('/:id{[0-9a-fA-F-]{36}}', householdAuthMiddleware)
 
-//householdsRouter.route('/:id/invites', householdInvitesRouter)
+// Teraz możesz deklarować trasy w DOWOLNEJ kolejności:
+householdsRouter.route('/invites', globalInvitesRouter)
+householdsRouter.route('/:id{[0-9a-fA-F-]{36}}/invites', householdInvitesRouter)
 //householdsRouter.route('/:id/members', householdMembersRouter)
 
 export default householdsRouter
