@@ -197,7 +197,9 @@ export const CreateInviteModal: React.FC<CreateInviteModalProps> = ({
                   min={1}
                   label="Custom number of uses"
                   value={customMaxUses}
-                  onChange={(e) => setCustomMaxUses(parseInt(e.target.value, 10) || 1)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCustomMaxUses(parseInt(e.target.value, 10) || 1)
+                  }
                   required
                 />
               </div>
@@ -207,4 +209,3 @@ export const CreateInviteModal: React.FC<CreateInviteModalProps> = ({
       )}
     </Modal>
   );
-};
