@@ -19,26 +19,28 @@ export interface JoinInviteDTO {
   code: string;
 }
 
-export interface GetInvitesResponse {
+export interface BaseApiResponse {
   success: boolean;
+  code: string;
+  message?: string; // Opcjonalny komunikat dla frontendu (np. do Toastów)
+}
+
+export interface GetInvitesResponse extends BaseApiResponse {
   code: 'INVITES_FETCHED';
   invites: InviteCode[];
 }
 
-export interface CreateInviteResponse {
-  success: boolean;
+export interface CreateInviteResponse extends BaseApiResponse {
   code: 'INVITE_CREATED';
   invite: InviteCode;
 }
 
-export interface DeleteInviteResponse {
-  success: boolean;
+export interface DeleteInviteResponse extends BaseApiResponse {
   code: 'INVITE_DELETED';
-  message: string;
+  // message dziedziczy jako string (lub wymuszony string)
 }
 
-export interface JoinInviteResponse {
-  success: boolean;
+export interface JoinInviteResponse extends BaseApiResponse {
   code: 'HOUSEHOLD_JOINED_SUCCESSFULLY';
   household: {
     id: string;
