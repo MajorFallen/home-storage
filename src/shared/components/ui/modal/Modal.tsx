@@ -4,7 +4,7 @@ import styles from './Modal.module.css';
 
 export interface ModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   title?: string;
   children: React.ReactNode;
   footer?: React.ReactNode;
@@ -23,7 +23,7 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') onClose?.();
     };
 
     if (isOpen) {
@@ -40,17 +40,19 @@ export const Modal: React.FC<ModalProps> = ({
         className={`${styles.modalCard} ${styles[size]} ${className}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {(title || onClose) && (
+        {(title || Boolean(onClose)) && (
           <CardHeader className={styles.modalHeader}>
             {title && <CardTitle>{title}</CardTitle>}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onClose}
-              aria-label="Close"
-            >
-              ✕
-            </Button>
+            {onClose && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onClose}
+                aria-label="Close"
+              >
+                ✕
+              </Button>
+            )}
           </CardHeader>
         )}
 
