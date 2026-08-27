@@ -209,3 +209,4 @@ export const CreateInviteModal: React.FC<CreateInviteModalProps> = ({
       )}
     </Modal>
   );
+}
