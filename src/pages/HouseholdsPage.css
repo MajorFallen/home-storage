@@ -7,15 +7,20 @@
 
 /* Nagłówek sekcji strony */
 .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 1.5rem;
-    padding-left: 0.5rem; /* Subtelne przesunięcie w prawo */
+    padding-left: 0.5rem;
+    /* Subtelne przesunięcie w prawo */
 }
 
-    .page-header h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--bg-foreground);
-    }
+.page-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bg-foreground);
+    margin-bottom: 0;
+}
 
 /* Komunikaty o błędach */
 .alert-error {

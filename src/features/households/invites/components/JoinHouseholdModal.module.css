@@ -1,0 +1,12 @@
+/* src/features/households/invites/components/JoinHouseholdModal.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

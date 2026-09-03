@@ -1,0 +1,18 @@
+.codeContainer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--code-bg, #f4f4f5);
+    border: 1px solid var(--border, #e4e4e7);
+    padding: 0.375rem 0.625rem 0.375rem 0.875rem;
+    border-radius: 0.375rem;
+    width: fit-content;
+}
+
+.codeDisplay {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    color: var(--surface-foreground, inherit);
+}

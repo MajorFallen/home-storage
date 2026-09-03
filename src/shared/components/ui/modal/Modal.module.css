@@ -1,0 +1,69 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay-bg, rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.15s ease-in-out;
+}
+
+.modalCard {
+    width: 100%;
+    margin: 1rem !important;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--surface-foreground);
+    animation: slideUp 0.15s ease-in-out;
+}
+
+/* Warianty rozmiarów */
+.sm {
+    max-width: 380px;
+}
+
+.md {
+    max-width: 480px;
+}
+
+.lg {
+    max-width: 640px;
+}
+
+.xl {
+    max-width: 800px;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(8px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

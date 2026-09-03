@@ -11,5 +11,6 @@ export type Env = {
   Variables: {
     user: CustomUser
     supabase: SupabaseClient
+    memberRole?: 'owner' | 'editor' | 'member'
   }
 }

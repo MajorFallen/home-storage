@@ -1,0 +1,28 @@
+.scrollArea {
+    padding-right: 0.25rem;
+}
+
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.stateContainer {
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-muted, #666);
+}
+
+.errorState {
+    color: var(--danger-color, #dc2626);
+    background-color: var(--danger-bg, #fef2f2);
+    border: 1px solid var(--danger-border, #fecaca);
+}
+
+.emptyState {
+    background-color: var(--empty-bg, #f9fafb);
+    border: 1px dashed var(--border-color, #e5e7eb);
+}

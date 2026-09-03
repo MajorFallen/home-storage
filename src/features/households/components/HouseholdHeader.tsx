@@ -1,9 +1,10 @@
-/* src/features/households/components/HouseholdHeader/HouseholdHeader.tsx */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useHouseholds } from '../context/HouseholdsContext';
-import { Button, PageHeader } from '../../../shared/components/ui';
+import { Button, PageHeader } from '@/shared/components/ui';
 import { HouseholdRoleBadge } from './badges/HouseholdRoleBadge';
+import { HouseholdSettingsButton } from '../settings/components/HouseholdSettingsButton';
+import { CreateInviteButton } from '../invites/components/CreateInviteButton.tsx';
 
 export const HouseholdHeader: React.FC = () => {
   const { activeHousehold } = useHouseholds();
@@ -56,6 +57,13 @@ export const HouseholdHeader: React.FC = () => {
           value={activeHousehold.created_by_name || 'Unknown'}
         />
       </PageHeader.Meta>
+
+      <PageHeader.Footer>
+          <CreateInviteButton>
+              + Add member
+          </CreateInviteButton>
+        <HouseholdSettingsButton />
+      </PageHeader.Footer>
     </PageHeader>
   );
 };

@@ -1,8 +1,13 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import { fileURLToPath, URL } from 'node:url';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+
+    const env = loadEnv(mode, process.cwd(), '');
+
+    return {
     plugins: [
         react(),
         VitePWA({
@@ -33,12 +38,38 @@ export default defineConfig({
                         purpose: 'any maskable'
                     }
                 ]
-            }
+            },
+            // --- AUTOMATYCZNE CACHOWANIE API ---
+            workbox: {
+                runtimeCaching: [
+                    {
+                        // Dopasuj wzorzec do ścieżki Twojego API (np. zaczynające się od /api/)
+                        urlPattern: ({ url }) => env.VITE_API_URL ? url.href.startsWith(env.VITE_API_URL) : false,
+                            handler: 'NetworkFirst',
+                        options: {
+                            cacheName: 'api-cache',
+                            expiration: {
+                                maxEntries: 100, // Maksymalna liczba zapamiętanych zapytań
+                                maxAgeSeconds: 60 * 60 * 24 * 7, // Czas przechowywania: 7 dni
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200], // Zapamiętuje tylko udane odpowiedzi HTTP
+                            },
+                        },
+                    },
+                ],
+            },
         })
     ],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+    },
     server: {
         watch: {
             ignored: ['**/.vs/**'] // <-- Nakazuje Vite ignorowanie plików Visual Studio
         }
     }
+}
 })

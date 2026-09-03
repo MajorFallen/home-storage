@@ -28,11 +28,16 @@ export async function httpClient<T = unknown>(
   }
 
   // Automatyczna serializacja: jeśli 'body' to obiekt, zamieniamy go na JSON
-  const serializedBody = typeof body === 'string' || body instanceof FormData
-    ? body
-    : (body ? JSON.stringify(body) : undefined);
+  const serializedBody =
+    typeof body === 'string' || body instanceof FormData
+      ? body
+      : body
+      ? JSON.stringify(body)
+      : undefined;
 
-  const response = await fetch(`${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`, {
+  const fullUrl = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+
+  const response = await fetch(fullUrl, {
     ...restConfig,
     headers,
     body: serializedBody,
@@ -42,6 +47,18 @@ export async function httpClient<T = unknown>(
     await tokenService.clearSession();
     window.dispatchEvent(new Event('auth:unauthorized'));
     throw new Error('Sesja wygasła lub została unieważniona');
+  }
+
+  const contentType = response.headers.get('content-type');
+  const isJson = contentType && contentType.includes('application/json');
+
+  if (!isJson) {
+    const rawText = await response.text();
+    console.error(`[httpClient Error] Otrzymano nie-JSON pod adresem ${fullUrl}:`, rawText);
+    
+    throw new Error(
+      `Serwer zwrócił niepoprawny format odpowiedzi (${response.status} ${response.statusText}). Sprawdź czy VITE_API_URL jest poprawnie skonfigurowana.`
+    );
   }
 
   const data = await response.json();

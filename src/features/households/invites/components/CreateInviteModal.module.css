@@ -1,0 +1,60 @@
+/* src/features/households/invites/components/CreateInviteModal.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--surface-foreground);
+}
+
+.optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.customInputContainer {
+    margin-top: 0.5rem;
+    animation: fadeIn 0.15s ease-in-out;
+}
+
+/* Widok sukcesu */
+.successSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.successDescription {
+    font-size: 0.875rem;
+    color: var(--surface-muted-foreground, var(--bg-muted-foreground));
+    line-height: 1.4;
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

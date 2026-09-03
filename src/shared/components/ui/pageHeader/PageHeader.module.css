@@ -12,15 +12,18 @@
   align-items: center;
   gap: 1rem;
   width: 100%;
-  flex-wrap: nowrap; /* Blada możliwość przeskoczenia do nowego wiersza */
+  flex-wrap: nowrap;
+  /* Blada możliwość przeskoczenia do nowego wiersza */
 }
 
 .group {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  flex-wrap: wrap; /* Wewnątrz lewej grupy elementy mogą się lekko zawinąć, jeśli brak miejsca */
-  min-width: 0;    /* Zapobiega rozpychaniu kontenera przez długi email/tekst */
+  flex-wrap: wrap;
+  /* Wewnątrz lewej grupy elementy mogą się lekko zawinąć, jeśli brak miejsca */
+  min-width: 0;
+  /* Zapobiega rozpychaniu kontenera przez długi email/tekst */
 }
 
 .actionsGroup {
@@ -28,7 +31,8 @@
   align-items: center;
   gap: 0.75rem;
   margin-left: auto;
-  flex-shrink: 0;  /* Gwarantuje, że przyciski nigdy nie zmniejszą się ani nie spadną niżej */
+  flex-shrink: 0;
+  /* Gwarantuje, że przyciski nigdy nie zmniejszą się ani nie spadną niżej */
 }
 
 .top {
@@ -50,6 +54,18 @@
   color: var(--surface-foreground);
   margin: 0;
   line-height: 1.2;
+}
+
+/* Dolny pasek akcji w nagłówku */
+.footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .text {
@@ -77,7 +93,7 @@
   color: var(--surface-foreground);
 }
 
-.meta > .metaItem:not(:last-child)::after {
+.meta>.metaItem:not(:last-child)::after {
   content: "•";
   margin-left: 0.5rem;
   color: var(--border);
@@ -94,7 +110,7 @@
     gap: 0.2rem;
   }
 
-  .meta > .metaItem:not(:last-child)::after {
+  .meta>.metaItem:not(:last-child)::after {
     display: none;
   }
 }
