@@ -16,53 +16,78 @@ function generateInviteCode(): string {
 
 // POST / — Tworzenie nowego kodu zaproszenia (Wymaga: owner | editor)
 householdInvitesRouter.post('/', requireHouseholdRole('owner', 'editor'), async (c) => {
-  const householdId = c.req.param('id')
-  const user = c.get('user')
-  const supabase = c.get('supabase')
+    const householdId = c.req.param('id')
+    const user = c.get('user')
+    const supabase = c.get('supabase')
 
-  const body = await c.req.json().catch(() => ({}))
-  const { maxUses, expiresInDays } = body
+    const body = await c.req.json().catch(() => ({}))
+    const { maxUses, expiresInDays } = body
 
-  // 1. Wyliczenie expires_at na podstawie dni
-  let expiresAt: string | null = null
-  if (typeof expiresInDays === 'number' && expiresInDays > 0) {
-    const date = new Date()
-    date.setDate(date.getDate() + expiresInDays)
-    expiresAt = date.toISOString()
-  }
+    // 1. Wyliczenie expires_at na podstawie dni
+    let expiresAt: string | null = null
+    if (typeof expiresInDays === 'number' && expiresInDays > 0) {
+        const date = new Date()
+        date.setDate(date.getDate() + expiresInDays)
+        expiresAt = date.toISOString()
+    }
 
-  // 2. Walidacja maxUses
-  const parsedMaxUses = typeof maxUses === 'number' && maxUses > 0 ? maxUses : null
+    // 2. Walidacja maxUses
+    const parsedMaxUses = typeof maxUses === 'number' && maxUses > 0 ? maxUses : null
 
-  // 3. Generowanie zaproszenia
-  const code = generateInviteCode()
+    // 3. Generowanie zaproszenia
+    const code = generateInviteCode()
 
-  const { data: invite, error } = await supabase
-    .from('invite_codes')
-    .insert({
-      household_id: householdId,
+    const { data: invite, error } = await supabase
+        .from('invite_codes')
+        .insert({
+            household_id: householdId,
+            code,
+            created_by: user.id,
+            max_uses: parsedMaxUses,
+            uses_count: 0,
+            expires_at: expiresAt,
+        })
+        .select(`
+      id,
       code,
-      created_by: user.id,
-      max_uses: parsedMaxUses,
-      uses_count: 0,
-      expires_at: expiresAt,
-    })
-    .select()
-    .single()
+      max_uses,
+      uses_count,
+      expires_at,
+      created_at,
+      created_by,
+      profiles:created_by (
+        name,
+        email
+      )
+    `)
+        .single()
 
-  if (error) {
+    if (error) {
+        return c.json({
+            success: false,
+            code: 'INVITE_CREATE_FAILED',
+            message: error.message,
+        }, 400)
+    }
+
+    // 4. Mapowanie odpowiedzi do tego samego formatu co w GET
+    const formattedInvite = {
+        id: invite.id,
+        code: invite.code,
+        max_uses: invite.max_uses,
+        uses_count: invite.uses_count,
+        expires_at: invite.expires_at,
+        created_at: invite.created_at,
+        created_by_id: invite.created_by,
+        created_by_name: (invite.profiles as any)?.name ?? null,
+        created_by_email: (invite.profiles as any)?.email ?? null,
+    }
+
     return c.json({
-      success: false,
-      code: 'INVITE_CREATE_FAILED',
-      message: error.message,
-    }, 400)
-  }
-
-  return c.json({
-    success: true,
-    code: 'INVITE_CREATED',
-    invite,
-  }, 201)
+        success: true,
+        code: 'INVITE_CREATED',
+        invite: formattedInvite,
+    }, 201)
 })
 
 // GET / — Pobieranie listy zaproszeń dla domostwa (Wymaga: owner | editor)

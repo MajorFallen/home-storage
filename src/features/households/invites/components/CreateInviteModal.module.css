@@ -1,4 +1,10 @@
-/* Formularz i sekcje */
+/* src/features/households/invites/components/CreateInviteModal.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -12,40 +18,15 @@
 }
 
 .label {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--surface-foreground);
 }
 
-/* Przyciski opcji */
 .optionsGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
-}
-
-.optionBtn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--surface-foreground);
-    padding: 0.6rem 0.75rem;
-    border-radius: var(--radius);
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    text-align: center;
-}
-
-.optionBtn:hover {
-    border-color: var(--border-hover);
-    background: var(--secondary);
-}
-
-.optionBtn.active {
-    background: var(--primary);
-    color: var(--primary-foreground);
-    border-color: var(--primary);
 }
 
 .customInputContainer {
@@ -53,7 +34,7 @@
     animation: fadeIn 0.15s ease-in-out;
 }
 
-/* Widok sukcesu i wygenerowanego kodu */
+/* Widok sukcesu */
 .successSection {
     display: flex;
     flex-direction: column;
@@ -61,39 +42,10 @@
 }
 
 .successDescription {
-    font-size: 0.9rem;
-    color: var(--muted-foreground, var(--surface-foreground));
+    font-size: 0.875rem;
+    color: var(--surface-muted-foreground, var(--bg-muted-foreground));
     line-height: 1.4;
     margin: 0;
-}
-
-.codeContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--secondary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.75rem 1rem;
-}
-
-.codeDisplay {
-    font-family: monospace;
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: var(--surface-foreground);
-}
-
-/* Komunikat o błędzie */
-.errorMessage {
-    background: var(--danger-light);
-    border: 1px solid var(--danger);
-    color: var(--danger-foreground);
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius);
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
 }
 
 @keyframes fadeIn {
@@ -101,7 +53,6 @@
         opacity: 0;
         transform: translateY(-4px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);

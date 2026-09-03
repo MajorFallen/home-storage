@@ -1,22 +1,21 @@
-import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
-import { invitesService } from '../services/invitesService';
-import { useHouseholds } from '../../context/HouseholdsContext';
+// src/features/households/invites/context/InvitesContext.tsx
+import React, { createContext, useContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { invitesService } from '@/features/households/invites/services/invitesService';
+import { useHouseholds } from '@/features/households/context/HouseholdsContext';
 import { 
   type InviteCode, 
   type CreateInviteDTO, 
   type JoinInviteResponse 
-} from '../types/invites.types';
+} from '@/features/households/invites/types/invites.types';
 
 interface InvitesContextType {
   invites: InviteCode[];
-  isLoading: boolean;
-  error: string | null;
-  loadInvites: () => Promise<void>;     // Pobiera tylko jeśli brak w cache
-  refreshInvites: () => Promise<void>;  // Wymusza pobranie z serwera (np. przycisk Odśwież)
+  isFetching: boolean; // Stan pobierania/odświeżania cache dla aktywnego domostwa
+  loadInvites: () => Promise<void>;
+  refreshInvites: () => Promise<void>;
   createInvite: (data: CreateInviteDTO) => Promise<InviteCode>;
   deleteInvite: (inviteId: string) => Promise<boolean>;
   joinHousehold: (code: string) => Promise<JoinInviteResponse['household']>;
-  clearError: () => void;
 }
 
 const InvitesContext = createContext<InvitesContextType | undefined>(undefined);
@@ -24,12 +23,20 @@ const InvitesContext = createContext<InvitesContextType | undefined>(undefined);
 export const InvitesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { activeHousehold, fetchHouseholds, selectHousehold } = useHouseholds();
 
-  // Cache: { [householdId]: InviteCode[] }
+  // Cache gotowych danych: { [householdId]: InviteCode[] }
   const [invitesByHousehold, setInvitesByHousehold] = useState<Record<string, InviteCode[]>>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const clearError = useCallback(() => setError(null), []);
+  // Stan trwającego pobierania/odświeżania: { [householdId]: boolean }
+  const [fetchingByHousehold, setFetchingByHousehold] = useState<Record<string, boolean>>({});
+
+  // Synchronizacja ref.current dla gotowego cache (Zasada 4: tylko w useEffect)
+  const invitesByHouseholdRef = useRef(invitesByHousehold);
+  useEffect(() => {
+    invitesByHouseholdRef.current = invitesByHousehold;
+  }, [invitesByHousehold]);
+
+  // Mapa trwających żądań (In-Flight Promises) dla deduplikacji zapytań
+  const inFlightRequestsRef = useRef<Record<string, Promise<InviteCode[]> | undefined>>({});
 
   // Wartość pochodna: lista zaproszeń dla aktywnego domostwa
   const invites = useMemo(() => {
@@ -37,68 +44,89 @@ export const InvitesProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return invitesByHousehold[activeHousehold.id] || [];
   }, [activeHousehold?.id, invitesByHousehold]);
 
-  // Wewnętrzna funkcja pomocnicza do pobierania danych z API
-  const fetchFromApi = useCallback(async (householdId: string) => {
-    setIsLoading(true);
-    setError(null);
+  // Wartość pochodna: czy trwa pobieranie/odświeżanie dla aktywnego domostwa
+  const isFetching = useMemo(() => {
+    if (!activeHousehold) return false;
+    return !!fetchingByHousehold[activeHousehold.id];
+  }, [activeHousehold?.id, fetchingByHousehold]);
+
+  // Wewnętrzna funkcja pomocnicza zarządzająca wskaźnikiem fetching
+  const executeFetch = useCallback(async (householdId: string): Promise<InviteCode[]> => {
+    setFetchingByHousehold((prev) => ({ ...prev, [householdId]: true }));
     try {
       const data = await invitesService.getInvites(householdId);
       setInvitesByHousehold((prev) => ({
         ...prev,
         [householdId]: data,
       }));
-    } catch (err: any) {
-      setError(err.message || 'Nie udało się pobrać listy zaproszeń.');
+      return data;
     } finally {
-      setIsLoading(false);
+      setFetchingByHousehold((prev) => ({ ...prev, [householdId]: false }));
     }
   }, []);
 
-  // 1. Ładowanie z obsługą cache (dla useEffect w komponentach)
+  // 1. Ładowanie z obsługą cache oraz deduplikacją żądań
   const loadInvites = useCallback(async () => {
     if (!activeHousehold) return;
-
     const householdId = activeHousehold.id;
 
-    // Jeśli dane są już w cache - nie strzelamy do API
-    if (invitesByHousehold[householdId] !== undefined) {
+    // A. Jeśli dane są już w cache – nic nie robimy
+    if (invitesByHouseholdRef.current[householdId] !== undefined) {
       return;
     }
 
-    await fetchFromApi(householdId);
-  }, [activeHousehold?.id, invitesByHousehold, fetchFromApi]);
+    // B. Jeśli żądanie dla tego householdId JUŻ LECI – podpinamy się pod istniejącą Obietnicę
+    if (inFlightRequestsRef.current[householdId]) {
+      await inFlightRequestsRef.current[householdId];
+      return;
+    }
 
-  // 2. Wymuszone odświeżenie z serwera (np. dla przycisku "Odśwież")
+    // C. Tworzymy nowe żądanie
+    const requestPromise = executeFetch(householdId);
+    inFlightRequestsRef.current[householdId] = requestPromise;
+
+    try {
+      await requestPromise;
+    } finally {
+      inFlightRequestsRef.current[householdId] = undefined;
+    }
+  }, [activeHousehold?.id, executeFetch]);
+
+  // 2. Wymuszone odświeżenie z serwera (np. wywołane z InvitesRefreshButton)
   const refreshInvites = useCallback(async () => {
     if (!activeHousehold) return;
-    await fetchFromApi(activeHousehold.id);
-  }, [activeHousehold?.id, fetchFromApi]);
+    const householdId = activeHousehold.id;
+
+    // Jeśli odświeżanie już trwa, podpinamy się pod istniejące żądanie
+    if (inFlightRequestsRef.current[householdId]) {
+      await inFlightRequestsRef.current[householdId];
+      return;
+    }
+
+    const requestPromise = executeFetch(householdId);
+    inFlightRequestsRef.current[householdId] = requestPromise;
+
+    try {
+      await requestPromise;
+    } finally {
+      inFlightRequestsRef.current[householdId] = undefined;
+    }
+  }, [activeHousehold?.id, executeFetch]);
 
   // 3. Tworzenie zaproszenia
   const createInvite = useCallback(async (data: CreateInviteDTO) => {
     if (!activeHousehold) {
       throw new Error('Brak wybranego domostwa.');
     }
-
     const householdId = activeHousehold.id;
-    setIsLoading(true);
-    setError(null);
-    try {
-      const newInvite = await invitesService.createInvite(householdId, data);
-      
-      setInvitesByHousehold((prev) => ({
-        ...prev,
-        [householdId]: [newInvite, ...(prev[householdId] || [])],
-      }));
+    const newInvite = await invitesService.createInvite(householdId, data);
 
-      return newInvite;
-    } catch (err: any) {
-      const msg = err.message || 'Nie udało się utworzyć zaproszenia.';
-      setError(msg);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
+    setInvitesByHousehold((prev) => ({
+      ...prev,
+      [householdId]: [newInvite, ...(prev[householdId] || [])],
+    }));
+
+    return newInvite;
   }, [activeHousehold?.id]);
 
   // 4. Usuwanie zaproszenia
@@ -106,60 +134,36 @@ export const InvitesProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (!activeHousehold) {
       throw new Error('Brak wybranego domostwa.');
     }
-
     const householdId = activeHousehold.id;
-    setIsLoading(true);
-    setError(null);
-    try {
-      const success = await invitesService.deleteInvite(householdId, inviteId);
-      if (success) {
-        setInvitesByHousehold((prev) => ({
-          ...prev,
-          [householdId]: (prev[householdId] || []).filter((inv) => inv.id !== inviteId),
-        }));
-      }
-      return success;
-    } catch (err: any) {
-      const msg = err.message || 'Nie udało się usunąć zaproszenia.';
-      setError(msg);
-      throw err;
-    } finally {
-      setIsLoading(false);
+    const success = await invitesService.deleteInvite(householdId, inviteId);
+
+    if (success) {
+      setInvitesByHousehold((prev) => ({
+        ...prev,
+        [householdId]: (prev[householdId] || []).filter((inv) => inv.id !== inviteId),
+      }));
     }
+    return success;
   }, [activeHousehold?.id]);
 
   // 5. Dołączanie do domostwa za pomocą kodu
   const joinHousehold = useCallback(async (code: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const joinedHousehold = await invitesService.joinHousehold(code);
-
-      await fetchHouseholds();
-      selectHousehold(joinedHousehold.id);
-
-      return joinedHousehold;
-    } catch (err: any) {
-      const msg = err.message || 'Nie udało się dołączyć do domostwa.';
-      setError(msg);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
+    const joinedHousehold = await invitesService.joinHousehold(code);
+    await fetchHouseholds();
+    selectHousehold(joinedHousehold.id);
+    return joinedHousehold;
   }, [fetchHouseholds, selectHousehold]);
 
   return (
     <InvitesContext.Provider
       value={{
         invites,
-        isLoading,
-        error,
+        isFetching,
         loadInvites,
         refreshInvites,
         createInvite,
         deleteInvite,
         joinHousehold,
-        clearError,
       }}
     >
       {children}
@@ -168,9 +172,9 @@ export const InvitesProvider: React.FC<{ children: React.ReactNode }> = ({ child
 };
 
 export const useInvites = (): InvitesContextType => {
-  const context = useContext(InvitesContext);
-  if (!context) {
+  const contextValue = useContext(InvitesContext);
+  if (!contextValue) {
     throw new Error('useInvites musi być użyty wewnątrz InvitesProvider');
   }
-  return context;
+  return contextValue;
 };
